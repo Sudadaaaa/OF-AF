@@ -1,8 +1,10 @@
-# OF-AF
+# One-Shot Flow, Any-Time Frame: A Bidirectional Warping Framework for Event-Based Video Frame Interpolation
 
-One-Shot Flow, Any-Time Frame: A Bidirectional Warping Framework for Event-Based Video Frame Interpolation.
+This repository is the official implementation of [One-Shot Flow, Any-Time Frame](https://openaccess.thecvf.com/content/CVPR2026/html/Fu_One-Shot_Flow_Any-Time_Frame_A_Bidirectional_Warping_Framework_for_Event-Based_CVPR_2026_paper.html) (CVPR 2026 Highlight), an event-based video frame interpolation method.
 
-## Installation
+![Pipeline](assets/pipeline.png)
+
+## &#x1F4E6; Installation
 
 ```bash
 conda create -n ofaf python=3.10
@@ -15,11 +17,11 @@ pip install cupy-cuda12x==13.3.0 -i https://pypi.org/simple/
 pip install scikit-image==0.24.0
 ```
 
-The above is a quick-start script. For the full list of dependencies, see [requirements.txt](requirements.txt).
+> The above is a quick-start script. For the full list of dependencies, see [requirements.txt](requirements.txt).
 
-## Getting Started
+## &#x1F680; Getting Started
 
-### Training
+### &#x1F682; Training
 
 Launch training with the provided script:
 
@@ -41,7 +43,7 @@ Key arguments (edit inside `train_model.sh` or override via command line):
 
 Weights are saved to `train/{save_dir}/epoch{N}.pth`.
 
-### Evaluation
+### &#x1F4C8; Evaluation
 
 A reference evaluation script is provided in `bsergb_eval.py`:
 
@@ -56,7 +58,7 @@ python bsergb_eval.py --checkpoint train/bsergb.pth
 | `--nb_of_flow` | 16 | Number of flow steps |
 | `--voxel_bins` | 128 | Event voxel bins |
 
-## Pre-trained Weights
+## &#x2B07; Pre-trained Weights
 
 Download the pre-trained checkpoint from [GitHub Releases](https://github.com/Sudadaaaa/OF-AF/releases):
 
@@ -65,30 +67,9 @@ mkdir -p train
 wget https://github.com/Sudadaaaa/OF-AF/releases/download/v1.0/bsergb.pth -O train/bsergb.pth
 ```
 
-Load the weights:
+## &#x1F64F; Acknowledgements
+This work builds upon several outstanding open-source projects:
 
-```python
-from models.model import MyModel
-import torch, argparse
-
-args = argparse.Namespace(voxel_bins=128, nb_of_flow=16)
-model = MyModel(args)
-state = torch.load('train/bsergb.pth')['model']
-model.load_state_dict(state)
-```
-
-## Model
-
-```
-models/
-├── model.py      # MyModel — top-level architecture
-├── encoder.py    # EventsEncoder, ImageEncoder
-├── BiFEB.py      # BidirFlow, Query, SepConvGRU
-├── BiW.py        # BiW, MaskGuideNet, RefBlock
-├── blocks.py     # ResBlock, ResBlockIF, BackwardWarp
-└── softsplat.py  # CUDA softmax splatting
-```
-
-## Acknowledgements
-
-Based on the paper "One-Shot Flow, Any-Time Frame" (ECCV 2026).
+- [softmax-splatting](https://github.com/sniklaus/softmax-splatting)
+- [RAFT](https://github.com/princeton-vl/RAFT)
+- [TimeLens-XL](https://github.com/OpenImagingLab/TimeLens-XL)

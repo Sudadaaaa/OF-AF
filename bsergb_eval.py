@@ -9,6 +9,7 @@ import numpy as np
 from tqdm import tqdm
 from torch.nn import functional as F
 from lpips import LPIPS
+from flolpipsloss.flolpips import Flolpips
 from models.model import MyModel
 from util.event import EventSequence
 from util.voxelization import to_voxel_grid
@@ -33,7 +34,6 @@ class BSERGB_Test():
                            'rope_jumping_01', 'street_crossing_08', 'watermelon_01']
         self.test_scenes = self.all_scenes
         self.lpips = LPIPS(net="alex").cuda()
-        from flolpipsloss.flolpips import Flolpips
         self.flolpips = Flolpips().cuda()
 
     def init_scene(self, scene, skip):
