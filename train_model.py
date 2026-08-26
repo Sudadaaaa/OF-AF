@@ -65,6 +65,7 @@ def train(model, args):
             loss = loss_p.mean() + torch.mean(loss_1)
             loss.backward()
 
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 0.1)
             optimizer.step()
             scheduler.step()
             learn_rate = optimizer.param_groups[0]['lr']
